@@ -1,120 +1,245 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const RepairPortalApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class RepairPortalApp extends StatelessWidget {
+  const RepairPortalApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Portal Digital Perbaikan Chasis & Body',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        textTheme: const TextTheme(
+          headlineLarge: TextStyle(fontSize: 32.0, fontWeight: FontWeight.bold),
+          bodyLarge: TextStyle(fontSize: 16.0),
+        ),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const HomeScreen(),
+      routes: {
+        '/services': (context) => const ServicesScreen(),
+        '/booking': (context) => const BookingScreen(),
+        '/tracking': (context) => const TrackingScreen(),
+      },
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: const Text('Portal Perbaikan Chasis & Body'),
+        centerTitle: true,
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text('You have pushed the button this many times:'),
-            Text('$_counter', style: Theme.of(context).textTheme.headlineMedium),
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Selamat Datang di Portal Digital Perbaikan',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 20),
+            const Text(
+              'Layanan perbaikan chassis dan body kendaraan Anda dengan mudah dan cepat.',
+              style: TextStyle(fontSize: 16),
+            ),
+            const SizedBox(height: 30),
+            Expanded(
+              child: GridView.count(
+                crossAxisCount: 2,
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 16,
+                children: [
+                  _buildMenuCard(
+                    context,
+                    'Layanan',
+                    Icons.build,
+                    '/services',
+                    'Lihat daftar layanan perbaikan',
+                  ),
+                  _buildMenuCard(
+                    context,
+                    'Pesan Perbaikan',
+                    Icons.schedule,
+                    '/booking',
+                    'Buat janji temu untuk perbaikan',
+                  ),
+                  _buildMenuCard(
+                    context,
+                    'Tracking Status',
+                    Icons.track_changes,
+                    '/tracking',
+                    'Pantau status perbaikan Anda',
+                  ),
+                  _buildMenuCard(
+                    context,
+                    'Kontak',
+                    Icons.contact_mail,
+                    null,
+                    'Hubungi kami untuk informasi',
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+
+  Widget _buildMenuCard(BuildContext context, String title, IconData icon, String? route, String subtitle) {
+    return Card(
+      elevation: 4,
+      child: InkWell(
+        onTap: route != null ? () => Navigator.pushNamed(context, route) : () {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Fitur Kontak akan segera hadir!')),
+          );
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, size: 48, color: Theme.of(context).primaryColor),
+              const SizedBox(height: 8),
+              Text(title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 4),
+              Text(subtitle, textAlign: TextAlign.center, style: const TextStyle(fontSize: 12)),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class ServicesScreen extends StatelessWidget {
+  const ServicesScreen({super.key});
+
+  final List<Map<String, String>> services = const [
+    {'name': 'Perbaikan Chassis', 'description': 'Perbaikan rangka kendaraan untuk keselamatan maksimal.'},
+    {'name': 'Perbaikan Body', 'description': 'Restorasi dan perbaikan bodi kendaraan.'},
+    {'name': 'Cat Ulang', 'description': 'Layanan pengecatan ulang untuk tampilan baru.'},
+    {'name': 'Penggantian Sparepart', 'description': 'Penggantian komponen chassis dan body dengan sparepart berkualitas.'},
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Layanan Perbaikan')),
+      body: ListView.builder(
+        itemCount: services.length,
+        itemBuilder: (context, index) {
+          final service = services[index];
+          return Card(
+            margin: const EdgeInsets.all(8.0),
+            child: ListTile(
+              title: Text(service['name']!, style: const TextStyle(fontWeight: FontWeight.bold)),
+              subtitle: Text(service['description']!),
+              trailing: const Icon(Icons.arrow_forward),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class BookingScreen extends StatefulWidget {
+  const BookingScreen({super.key});
+
+  @override
+  State<BookingScreen> createState() => _BookingScreenState();
+}
+
+class _BookingScreenState extends State<BookingScreen> {
+  final _formKey = GlobalKey<FormState>();
+  String _name = '';
+  String _vehicle = '';
+  String _service = '';
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Pesan Perbaikan')),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              TextFormField(
+                decoration: const InputDecoration(labelText: 'Nama Anda'),
+                validator: (value) => value!.isEmpty ? 'Nama wajib diisi' : null,
+                onSaved: (value) => _name = value!,
+              ),
+              TextFormField(
+                decoration: const InputDecoration(labelText: 'Kendaraan (contoh: Toyota Avanza)'),
+                validator: (value) => value!.isEmpty ? 'Kendaraan wajib diisi' : null,
+                onSaved: (value) => _vehicle = value!,
+              ),
+              TextFormField(
+                decoration: const InputDecoration(labelText: 'Jenis Layanan'),
+                validator: (value) => value!.isEmpty ? 'Layanan wajib diisi' : null,
+                onSaved: (value) => _service = value!,
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    _formKey.currentState!.save();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Pemesanan berhasil! Kami akan menghubungi Anda segera.')),
+                    );
+                  }
+                },
+                child: const Text('Pesan Sekarang'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class TrackingScreen extends StatelessWidget {
+  const TrackingScreen({super.key});
+
+  final List<Map<String, String>> repairs = const [
+    {'id': '001', 'status': 'Sedang Diproses', 'description': 'Perbaikan chassis selesai, menunggu cat ulang.'},
+    {'id': '002', 'status': 'Selesai', 'description': 'Perbaikan body dan sparepart telah selesai.'},
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Tracking Status Perbaikan')),
+      body: ListView.builder(
+        itemCount: repairs.length,
+        itemBuilder: (context, index) {
+          final repair = repairs[index];
+          return Card(
+            margin: const EdgeInsets.all(8.0),
+            child: ListTile(
+              title: Text('ID Perbaikan: ${repair['id']}', style: const TextStyle(fontWeight: FontWeight.bold)),
+              subtitle: Text('${repair['status']} - ${repair['description']}'),
+            ),
+          );
+        },
+      ),
     );
   }
 }
