@@ -128,5 +128,38 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-// Existing ServicesScreen, BookingScreen, TrackingScreen unchanged
-// (they remain here as before, omitted for brevity)
+class ServicesScreen extends StatelessWidget {
+  const ServicesScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Layanan Perbaikan')),
+      body: const Center(child: Text('Daftar layanan perbaikan akan ditampilkan di sini.')),
+    );
+  }
+}
+
+class BookingScreen extends StatelessWidget {
+  const BookingScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Pesan Perbaikan')),
+      body: const Center(child: Text('Formulir pemesanan perbaikan akan ditampilkan di sini.')),
+    );
+  }
+}
+
+class TrackingScreen extends StatelessWidget {
+  const TrackingScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Tracking Status')),
+      body: const Center(child: Text('Status tracking perbaikan akan ditampilkan di sini.')),
+    );
+  }
+}
